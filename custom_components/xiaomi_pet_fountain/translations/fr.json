@@ -1,0 +1,95 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fontaine Xiaomi",
+        "description": "Entrez vos identifiants Xiaomi.",
+        "data": {
+          "username": "Email / Téléphone",
+          "password": "Mot de passe",
+          "region": "Région"
+        }
+      },
+      "otp": {
+        "title": "Authentification à deux facteurs",
+        "description": "Entrez le code OTP envoyé sur votre appareil.",
+        "data": {
+          "otp_code": "Code OTP"
+        }
+      },
+      "pick_device": {
+        "title": "Choisir une fontaine",
+        "description": "Plusieurs fontaines trouvées. Choisissez-en une.",
+        "data": {
+          "device_id": "Fontaine"
+        }
+      }
+    },
+    "abort": {
+      "no_devices_found": "Aucune fontaine trouvée sur ce compte.",
+      "cannot_connect": "Impossible de se connecter au cloud Xiaomi."
+    },
+    "error": {
+      "invalid_auth": "Identifiants invalides.",
+      "invalid_otp": "Code OTP invalide.",
+      "cannot_connect": "Connexion impossible."
+    }
+  },
+  "entity": {
+    "switch": {
+      "pump": {
+        "name": "Pompe"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Batterie"
+      },
+      "filter_life": {
+        "name": "Durée de vie du filtre"
+      },
+      "filter_days": {
+        "name": "Jours restants filtre"
+      },
+      "fault": {
+        "name": "Défaut",
+        "state": {
+          "none": "Aucun",
+          "water_shortage": "Manque d'eau",
+          "pump_blocked": "Pompe bloquée",
+          "filter_expired": "Filtre expiré",
+          "lid_removed": "Couvercle retiré"
+        }
+      }
+    },
+    "binary_sensor": {
+      "water_shortage": {
+        "name": "Manque d'eau"
+      },
+      "pump_blocked": {
+        "name": "Pompe bloquée"
+      },
+      "filter_expired": {
+        "name": "Filtre expiré"
+      },
+      "lid_removed": {
+        "name": "Couvercle retiré"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Mode de débit",
+        "state": {
+          "sensor": "Capteur intelligent",
+          "intermittent": "Intermittent",
+          "continuous": "Continu"
+        }
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Réinitialiser le filtre"
+      }
+    }
+  }
+}

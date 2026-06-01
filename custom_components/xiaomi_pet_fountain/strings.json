@@ -1,0 +1,95 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Xiaomi Pet Fountain",
+        "description": "Enter your Xiaomi account credentials.",
+        "data": {
+          "username": "Email / Phone",
+          "password": "Password",
+          "region": "Region"
+        }
+      },
+      "otp": {
+        "title": "Two-Factor Authentication",
+        "description": "Enter the OTP code sent to your device.",
+        "data": {
+          "otp_code": "OTP Code"
+        }
+      },
+      "pick_device": {
+        "title": "Select Fountain",
+        "description": "Multiple fountains found. Pick one.",
+        "data": {
+          "device_id": "Fountain"
+        }
+      }
+    },
+    "abort": {
+      "no_devices_found": "No pet fountain found on this account.",
+      "cannot_connect": "Cannot connect to Xiaomi cloud."
+    },
+    "error": {
+      "invalid_auth": "Invalid credentials.",
+      "invalid_otp": "Invalid OTP code.",
+      "cannot_connect": "Cannot connect."
+    }
+  },
+  "entity": {
+    "switch": {
+      "pump": {
+        "name": "Pump"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Battery"
+      },
+      "filter_life": {
+        "name": "Filter Life"
+      },
+      "filter_days": {
+        "name": "Filter Days Remaining"
+      },
+      "fault": {
+        "name": "Fault",
+        "state": {
+          "none": "None",
+          "water_shortage": "Water Shortage",
+          "pump_blocked": "Pump Blocked",
+          "filter_expired": "Filter Expired",
+          "lid_removed": "Lid Removed"
+        }
+      }
+    },
+    "binary_sensor": {
+      "water_shortage": {
+        "name": "Water Shortage"
+      },
+      "pump_blocked": {
+        "name": "Pump Blocked"
+      },
+      "filter_expired": {
+        "name": "Filter Expired"
+      },
+      "lid_removed": {
+        "name": "Lid Removed"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Flow Mode",
+        "state": {
+          "sensor": "Smart Sensor",
+          "intermittent": "Intermittent",
+          "continuous": "Continuous"
+        }
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Reset Filter"
+      }
+    }
+  }
+}

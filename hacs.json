@@ -1,0 +1,9 @@
+{
+  "name": "Xiaomi Pet Fountain",
+  "domain": "xiaomi_pet_fountain",
+  "documentation": "https://github.com/tdelannoy/ha-xiaomi-pet-fountain",
+  "issue_tracker": "https://github.com/tdelannoy/ha-xiaomi-pet-fountain/issues",
+  "codeowners": ["@tdelannoy"],
+  "homeassistant": "2024.1.0",
+  "iot_class": "cloud_polling"
+}
