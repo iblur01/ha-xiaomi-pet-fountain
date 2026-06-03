@@ -1,7 +1,7 @@
 {
   "domain": "xiaomi_pet_fountain",
   "name": "Xiaomi Pet Fountain",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "documentation": "https://github.com/tdelannoy/ha-xiaomi-pet-fountain",
   "issue_tracker": "https://github.com/tdelannoy/ha-xiaomi-pet-fountain/issues",
   "codeowners": ["@tdelannoy"],

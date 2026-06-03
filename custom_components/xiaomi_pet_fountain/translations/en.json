@@ -3,18 +3,12 @@
     "step": {
       "user": {
         "title": "Xiaomi Pet Fountain",
-        "description": "Enter your Xiaomi account credentials.",
+        "description": "Enter your Xiaomi Cloud session tokens.",
         "data": {
-          "username": "Email / Phone",
-          "password": "Password",
+          "user_id": "User ID",
+          "ssecurity": "ssecurity",
+          "service_token": "serviceToken",
           "region": "Region"
-        }
-      },
-      "otp": {
-        "title": "Two-Factor Authentication",
-        "description": "Enter the OTP code sent to your device.",
-        "data": {
-          "otp_code": "OTP Code"
         }
       },
       "pick_device": {
@@ -30,8 +24,7 @@
       "cannot_connect": "Cannot connect to Xiaomi cloud."
     },
     "error": {
-      "invalid_auth": "Invalid credentials.",
-      "invalid_otp": "Invalid OTP code.",
+      "invalid_auth": "Invalid session tokens.",
       "cannot_connect": "Cannot connect."
     }
   },

@@ -3,18 +3,12 @@
     "step": {
       "user": {
         "title": "Fontaine Xiaomi",
-        "description": "Entrez vos identifiants Xiaomi.",
+        "description": "Entrez vos jetons de session Xiaomi Cloud.",
         "data": {
-          "username": "Email / Téléphone",
-          "password": "Mot de passe",
+          "user_id": "User ID",
+          "ssecurity": "ssecurity",
+          "service_token": "serviceToken",
           "region": "Région"
-        }
-      },
-      "otp": {
-        "title": "Authentification à deux facteurs",
-        "description": "Entrez le code OTP envoyé sur votre appareil.",
-        "data": {
-          "otp_code": "Code OTP"
         }
       },
       "pick_device": {
@@ -30,8 +24,7 @@
       "cannot_connect": "Impossible de se connecter au cloud Xiaomi."
     },
     "error": {
-      "invalid_auth": "Identifiants invalides.",
-      "invalid_otp": "Code OTP invalide.",
+      "invalid_auth": "Jetons de session invalides.",
       "cannot_connect": "Connexion impossible."
     }
   },

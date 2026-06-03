@@ -25,8 +25,11 @@ Supported models: `xiaomi.pet_waterer.iv02`, `mmgg.pet_waterer.wi11` (and varian
 1. Install via HACS (custom repository) or copy `custom_components/xiaomi_pet_fountain` into your HA `custom_components` folder.
 2. Restart Home Assistant.
 3. Go to **Settings → Integrations → Add Integration** → search **Xiaomi Pet Fountain**.
-4. Enter your Xiaomi account email, password, and region (`de` for EU, `cn` for China, `us` for US…).
-5. Complete 2FA if prompted.
+4. Enter your Xiaomi Cloud session tokens and region (`de` for EU, `cn` for China, `us` for US…):
+   - `user_id` — your Xiaomi user ID
+   - `ssecurity` — Xiaomi ssecurity token
+   - `service_token` — Xiaomi serviceToken
+   - `region` — Xiaomi Cloud region (`de`, `cn`, `us`, `sg`, `ru`, `tw`, `in`, `i2`)
 
 ## Regions
 
@@ -39,6 +42,7 @@ Supported models: `xiaomi.pet_waterer.iv02`, `mmgg.pet_waterer.wi11` (and varian
 | Taiwan | `tw` |
 | Singapore | `sg` |
 | India | `in` |
+| India (alt) | `i2` |
 
 ## Automations
 

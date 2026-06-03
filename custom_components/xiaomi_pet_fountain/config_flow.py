@@ -2,46 +2,36 @@
 from __future__ import annotations
 
 import logging
+import time
 from typing import Any
 
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
-from homeassistant.const import CONF_NAME
 
 from .const import (
     CONF_DEVICE_ID,
     CONF_DEVICE_NAME,
-    CONF_PASSWORD,
     CONF_REGION,
+    CONF_SERVICE_TOKEN,
     CONF_SESSION,
-    CONF_USERNAME,
-    DEFAULT_POLL_INTERVAL,
+    CONF_SSECURITY,
+    CONF_USER_ID,
     DEFAULT_REGION,
     DOMAIN,
     MODEL_PATTERNS,
     REGIONS,
 )
-from .micloud import (
-    MiCloud2FARequired,
-    MiCloudAuth,
-    MiCloudAuthError,
-    Session,
-)
+from .micloud import MiCloudClient, Session
 
 _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_USERNAME): str,
-        vol.Required(CONF_PASSWORD): str,
+        vol.Required(CONF_USER_ID): str,
+        vol.Required(CONF_SSECURITY): str,
+        vol.Required(CONF_SERVICE_TOKEN): str,
         vol.Optional(CONF_REGION, default=DEFAULT_REGION): vol.In(REGIONS),
-    }
-)
-
-STEP_OTP_SCHEMA = vol.Schema(
-    {
-        vol.Required("otp_code"): str,
     }
 )
 
@@ -50,8 +40,6 @@ class XiaomiPetFountainConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     def __init__(self) -> None:
-        self._auth: MiCloudAuth | None = None
-        self._notification_url: str | None = None
         self._session: Session | None = None
         self._region: str = DEFAULT_REGION
         self._fountains: list[dict] = []
@@ -62,25 +50,14 @@ class XiaomiPetFountainConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            username = user_input[CONF_USERNAME]
-            password = user_input[CONF_PASSWORD]
             self._region = user_input.get(CONF_REGION, DEFAULT_REGION)
-
-            self._auth = MiCloudAuth(region=self._region)
-            try:
-                await self._auth.login(username, password)
-                self._session = self._auth.session
-                return await self._async_discover_fountains()
-
-            except MiCloud2FARequired as exc:
-                self._notification_url = exc.notification_url
-                return await self.async_step_otp()
-
-            except MiCloudAuthError:
-                errors["base"] = "invalid_auth"
-            except Exception:
-                _LOGGER.exception("Unexpected error during login")
-                errors["base"] = "cannot_connect"
+            self._session = Session(
+                user_id=str(user_input[CONF_USER_ID]).strip(),
+                ssecurity=str(user_input[CONF_SSECURITY]).strip(),
+                service_token=str(user_input[CONF_SERVICE_TOKEN]).strip(),
+                saved_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            )
+            return await self._async_discover_fountains(errors)
 
         return self.async_show_form(
             step_id="user",
@@ -88,40 +65,22 @@ class XiaomiPetFountainConfigFlow(ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
-    async def async_step_otp(
-        self, user_input: dict[str, Any] | None = None
+    async def _async_discover_fountains(
+        self, errors: dict[str, str]
     ) -> ConfigFlowResult:
-        errors: dict[str, str] = {}
-
-        if user_input is not None and self._auth and self._notification_url:
-            try:
-                await self._auth.submit_otp(
-                    self._notification_url, user_input["otp_code"]
-                )
-                self._session = self._auth.session
-                return await self._async_discover_fountains()
-            except MiCloudAuthError:
-                errors["base"] = "invalid_otp"
-            except Exception:
-                _LOGGER.exception("Unexpected error during OTP")
-                errors["base"] = "cannot_connect"
-
-        return self.async_show_form(
-            step_id="otp",
-            data_schema=STEP_OTP_SCHEMA,
-            errors=errors,
-        )
-
-    async def _async_discover_fountains(self) -> ConfigFlowResult:
         assert self._session is not None
-        from .micloud import MiCloudClient
 
         client = MiCloudClient(self._session, self._region)
         try:
             devices = await client.get_devices()
         except Exception:
             _LOGGER.exception("Failed to list devices")
-            return self.async_abort(reason="cannot_connect")
+            errors["base"] = "invalid_auth"
+            return self.async_show_form(
+                step_id="user",
+                data_schema=STEP_USER_SCHEMA,
+                errors=errors,
+            )
 
         self._fountains = [
             {"did": d.did, "name": d.name, "model": d.model}
